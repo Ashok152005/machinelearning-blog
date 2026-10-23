@@ -1,52 +1,100 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap");
 
-:root { --bg:#ffffff; --tx:#1f2328; --mu:#5b6470; --bd:#d8dee4; --soft:#f3f5f7; --ac:#0b5cad; }
+:root { --bg:#f4f6fb; --card:#ffffff; --tx:#1c2237; --mu:#5d6680; --bd:#e3e7f2; --soft:#f1f3fb; --ac:#5b5bd6; --acs:#eceefe; }
 @media (prefers-color-scheme: dark) {
-  :root { --bg:#14181d; --tx:#e6e9ee; --mu:#9aa4b0; --bd:#2c333b; --soft:#1c2128; --ac:#6cb0f5; }
+  :root { --bg:#0f1320; --card:#171c2e; --tx:#e8ebf7; --mu:#9aa3c0; --bd:#272e47; --soft:#1e2540; --ac:#8b8cf0; --acs:#232a52; }
 }
+/* Topic list page is always dark navy, like the notebook hub */
+body:has(.list) { --bg:#0a0e17; --card:#131929; --tx:#ffffff; --mu:#9aa3bd; --bd:#222a40; --soft:#1a2136; --ac:#818cf8; --acs:#252b5c; }
 
-body { background: var(--bg); color: var(--tx); font: 17px/1.65 "Source Sans 3", system-ui, sans-serif; }
+body { background: var(--bg); color: var(--tx); font: 16px/1.7 "Inter", system-ui, sans-serif; }
 a { color: var(--ac); }
-.wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px 40px; }
-.back { display: inline-block; margin-bottom: 18px; font-size: 15px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 40px; }
+.wrap:has(.list) { max-width: 1060px; padding-top: 40px; }
+.back { display: inline-block; margin-bottom: 16px; padding: 6px 14px; font-size: 14px; font-weight: 500; text-decoration: none; color: var(--ac); background: var(--card); border: 1px solid var(--bd); border-radius: 999px; }
+.back:hover { background: var(--acs); }
 
-h1 { font-size: 2rem; line-height: 1.2; margin-bottom: 12px; }
-h2 { font-size: 1.2rem; margin: 28px 0 8px; }
+/* Page card for every page except the topic list */
+.wrap:not(:has(.list)) main { background: var(--card); border: 1px solid var(--bd); border-radius: 20px; padding: 36px 36px 30px; box-shadow: 0 8px 28px rgba(40,50,110,.08); }
+
+h1 { font-size: 2.1rem; line-height: 1.2; font-weight: 800; letter-spacing: -.02em; margin-bottom: 14px; }
+h2 { font-size: 1.2rem; font-weight: 700; margin: 32px 0 10px; }
 p { margin-bottom: 12px; }
-ul, ol { margin: 0 0 12px 22px; }
-li { margin-bottom: 6px; }
-.lead { color: var(--mu); margin-bottom: 20px; }
-.muted { color: var(--mu); font-size: 15px; }
+.lead { color: var(--mu); margin-bottom: 26px; }
+.muted { color: var(--mu); font-size: 14px; }
 
-/* Home list */
-.list { list-style: decimal; margin: 0 0 20px 24px; }
-.list li { padding: 6px 0; border-bottom: 1px solid var(--bd); }
-.list a { text-decoration: none; font-weight: 600; }
-.list a:hover { text-decoration: underline; }
-.more { margin-top: 18px; }
+/* Small label above the title on topic pages */
+main:has(.formula) h1::before { content: "ML NOTEBOOK"; display: block; margin-bottom: 8px; font-size: 12px; font-weight: 600; letter-spacing: .1em; color: var(--ac); }
+main:has(.formula) { counter-reset: sec; }
+main:has(.formula) h2 { counter-increment: sec; }
+main:has(.formula) h2::before { content: counter(sec) ". "; color: var(--ac); }
+main:has(.formula) > h1 + p { font-size: 1.05rem; color: var(--mu); }
 
-.formula { margin: 14px 0; padding: 10px 14px; border-left: 3px solid var(--ac); background: var(--soft); font: 15px "JetBrains Mono", monospace; overflow-x: auto; }
-.summary { margin-top: 24px; padding: 10px 14px; background: var(--soft); }
+/* Topic list (home) */
+.list { list-style: none; counter-reset: n; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0 0 28px; }
+.list li { counter-increment: n; margin: 0; }
+.list a { display: flex; align-items: center; gap: 16px; padding: 18px 22px; font-size: 1.05rem; font-weight: 600; color: var(--tx); text-decoration: none; background: var(--card); border: 1px solid var(--bd); border-radius: 18px; }
+.list a::before { content: counter(n); flex: none; display: grid; place-items: center; width: 54px; height: 54px; font-size: 1.3rem; font-weight: 700; color: var(--ac); background: var(--acs); border-radius: 14px; }
+.list a::after { content: "\2197"; margin-left: auto; color: var(--mu); }
+.list a:hover { border-color: var(--ac); }
+.more { color: var(--mu); }
+.more a { font-weight: 500; }
+body:has(.list) h1 { font-size: 2.6rem; }
 
-.code { position: relative; background: var(--soft); border: 1px solid var(--bd); border-radius: 4px; }
-.code pre { padding: 14px; overflow-x: auto; font: 14px/1.6 "JetBrains Mono", monospace; }
-.code button { position: absolute; top: 8px; right: 8px; padding: 2px 10px; font: 14px "Source Sans 3", sans-serif; color: var(--tx); background: var(--bg); border: 1px solid var(--bd); border-radius: 4px; cursor: pointer; }
+.formula { margin: 16px 0; padding: 12px 16px; font: 15px "JetBrains Mono", monospace; color: var(--tx); background: var(--acs); border: 1px dashed var(--ac); border-radius: 12px; overflow-x: auto; }
 
-.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--bd); font-size: 15px; }
+/* Key terms as soft boxes, steps as numbered circles */
+main:has(.formula) ul { list-style: none; margin: 0; }
+main:has(.formula) ul li { margin-bottom: 8px; padding: 10px 14px; background: var(--soft); border-left: 3px solid var(--ac); border-radius: 10px; }
+main:has(.formula) ol { list-style: none; counter-reset: st; margin: 0; }
+main:has(.formula) ol li { counter-increment: st; position: relative; padding: 2px 0 12px 42px; }
+main:has(.formula) ol li::before { content: counter(st); position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 28px; height: 28px; font-size: 13px; font-weight: 700; color: #fff; background: var(--ac); border-radius: 50%; }
+
+/* Worked example box */
+main:has(.formula) h2:nth-of-type(3) + p { padding: 16px 18px; background: var(--acs); border: 1px solid var(--bd); border-radius: 14px; }
+
+/* Code block */
+.code { position: relative; background: #0f1424; border-radius: 14px; overflow: hidden; }
+.code pre { padding: 18px 16px 16px; overflow-x: auto; font: 13.5px/1.7 "JetBrains Mono", monospace; color: #d6dbff; }
+.code button { position: absolute; top: 8px; right: 8px; padding: 3px 12px; font: 500 12px "Inter", sans-serif; color: #c5cbf0; background: transparent; border: 1px solid #343a60; border-radius: 8px; cursor: pointer; }
+.code button:hover { background: #2a3052; }
+
+/* Uses / advantages / limits */
+main:has(.formula) h2:last-of-type + p, main:has(.formula) h2:last-of-type + p + p, main:has(.formula) h2:last-of-type + p + p + p { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bd); }
+main:has(.formula) h2:last-of-type + p { background: var(--acs); }
+main:has(.formula) h2:last-of-type + p + p { background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.4); }
+main:has(.formula) h2:last-of-type + p + p + p { background: rgba(239,68,68,.10); border-color: rgba(239,68,68,.35); }
+main:has(.formula) h2:last-of-type + p + p b { color: #10b981; }
+main:has(.formula) h2:last-of-type + p + p + p b { color: #ef4444; }
+
+.summary { margin-top: 24px; padding: 14px 18px; color: #fff; background: var(--ac); border-radius: 14px; }
+@media (prefers-color-scheme: dark) { .summary { color: #0f1320; } }
+
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--bd); }
+.pager a { padding: 8px 14px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid var(--bd); border-radius: 12px; }
+.pager a:hover { background: var(--acs); }
 
 /* Quiz */
-.opt { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 10px 14px; font: inherit; color: var(--tx); background: var(--bg); border: 1px solid var(--bd); border-radius: 4px; cursor: pointer; }
+.opt { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px 16px; font: 500 15px "Inter", sans-serif; color: var(--tx); background: var(--card); border: 2px solid var(--bd); border-radius: 12px; cursor: pointer; }
 .opt:hover { border-color: var(--ac); }
-.opt.ok { background: #1a7f37; border-color: #1a7f37; color: #fff; }
-.opt.no { background: #c62828; border-color: #c62828; color: #fff; }
-.btn { margin-top: 12px; padding: 9px 20px; font: 600 16px "Source Sans 3", sans-serif; color: #fff; background: var(--ac); border: 0; border-radius: 4px; cursor: pointer; }
-@media (prefers-color-scheme: dark) { .btn { color: #0b1117; } }
+.opt.ok { background: #10b981; border-color: #10b981; color: #fff; }
+.opt.no { background: #ef4444; border-color: #ef4444; color: #fff; }
+.btn { margin-top: 14px; padding: 10px 24px; font: 600 15px "Inter", sans-serif; color: #fff; background: var(--ac); border: 0; border-radius: 12px; cursor: pointer; }
+@media (prefers-color-scheme: dark) { .btn { color: #0f1320; } }
 
 /* Table + glossary */
-.tw { overflow-x: auto; margin-bottom: 16px; }
-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-th, td { padding: 8px 10px; text-align: left; border: 1px solid var(--bd); }
-th { background: var(--soft); white-space: nowrap; }
-.search { width: 100%; margin-bottom: 16px; padding: 9px 12px; font: inherit; color: var(--tx); background: var(--bg); border: 1px solid var(--bd); border-radius: 4px; }
+.tw { overflow-x: auto; margin-bottom: 18px; border: 1px solid var(--bd); border-radius: 14px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { padding: 11px 14px; text-align: left; white-space: nowrap; color: #fff; background: var(--ac); }
+td { padding: 10px 14px; border-top: 1px solid var(--bd); }
+tbody tr:nth-child(even) { background: var(--soft); }
+.search { width: 100%; margin-bottom: 18px; padding: 12px 16px; font: 15px "Inter", sans-serif; color: var(--tx); background: var(--soft); border: 2px solid var(--bd); border-radius: 12px; outline: none; }
+.search:focus { border-color: var(--ac); }
 
-footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--bd); color: var(--mu); font-size: 14px; }
+footer { margin-top: 32px; padding-top: 16px; text-align: center; color: var(--mu); font-size: 13.5px; border-top: 1px solid var(--bd); }
+
+@media (max-width: 680px) {
+  .list { grid-template-columns: 1fr; }
+  .wrap:not(:has(.list)) main { padding: 24px 18px; border-radius: 16px; }
+  h1, body:has(.list) h1 { font-size: 1.8rem; }
+}
