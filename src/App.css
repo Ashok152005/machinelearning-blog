@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Serif+4:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap");
 
-/* Light: graph paper. Dark: blueprint. */
-:root { --paper:#fbfcfe; --grid:#dbe5f3; --ink:#16233f; --mu:#55627d; --red:#d9403f; --hl:#ffe566; --teal:#0b7f70; --note:#fff1a6; --soft:#eef3fa; }
-@media (prefers-color-scheme: dark) {
-  :root { --paper:#0f2a4a; --grid:#1c4068; --ink:#eaf2ff; --mu:#9db6d6; --red:#ff857d; --hl:rgba(255,216,77,.3); --teal:#4fd1b5; --soft:#16365b; }
-}
+/* Always the light graph-paper look, on every device. */
+:root { --paper:#fbfcfe; --grid:#dbe5f3; --ink:#16233f; --mu:#55627d; --red:#d9403f; --hl:#ffe566; --teal:#0b7f70; --note:#fff1a6; --soft:#eef3fa; color-scheme: light; }
 
 body {
   background-color: var(--paper);
